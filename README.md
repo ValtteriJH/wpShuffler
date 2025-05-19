@@ -1,2 +1,16 @@
-# wpShuffler
-Wallpaper shuffler with go. Made to swap wallpapers easily while using i3
+# Wallpaper shuffler
+
+Small utility to hotswap wallpapers with a seleced file folder and hsetroot
+
+Compile with GO. Deps:
+GO
+github.com/joho/godotenv
+
+drop compiled file into desired destination, and link to i3 bind
+
+for setting parameters: create .env file to the root of the project with following items
+
+SOURCEDIR= /path/ # Replace with your source directory
+DESTDIR= /path/ # Replace with your destination directory
+LOADDIR=/path/wallpaper.jpg # Replace with your destination directory
+NAME=wallpaper.jpg
