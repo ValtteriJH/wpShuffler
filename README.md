@@ -3,8 +3,9 @@
 Small utility to hotswap wallpapers with a seleced file folder and hsetroot
 
 Compile with GO. Deps:
-GO
+GO binaries
 github.com/joho/godotenv
+hsetroot
 
 drop compiled file into desired destination, and link to i3 bind
 
