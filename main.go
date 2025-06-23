@@ -15,10 +15,14 @@ import (
 func goDotEnvVariable(key string) string {
 
   // load .env file
-  err := godotenv.Load(".env")
+  // err := godotenv.Load(".env")
+	// REPLACE WITH THE SCRIPT THING
+  err := godotenv.Load("/home/swider/.config/wpShuffler/.env")
 
   if err != nil {
     fmt.Println("Error loading .env file")
+    fmt.Println("Error run the build.sh before running the program")
+		// ASK USER TO RUN SETUP SCRIPT
   }
 
   return os.Getenv(key)
@@ -36,7 +40,6 @@ func main() {
 	source := goDotEnvVariable("SOURCEDIR")
 	destination := goDotEnvVariable("DESTDIR")
 	filename := goDotEnvVariable("NAME")
-	load := goDotEnvVariable("LOADDIR")
 	
 	sourceDir := source // Replace with your source directory
 	destDir := destination // Replace with your destination directory
@@ -64,7 +67,7 @@ func main() {
 
 	fmt.Println("File copied successfully:", selectedFile.Name())
 	// restart hsetroot
-	output, err := exec.Command("hsetroot","-fill",load).Output()
+	output, err := exec.Command("hsetroot","-fill",destFile).Output()
 	if err!=nil {
 	    fmt.Println(err.Error())
 	}
