@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"os"
 	"os/exec"
+	"os/user"
 	"path/filepath"
 	"time"
 	"github.com/joho/godotenv"
@@ -15,9 +16,19 @@ import (
 func goDotEnvVariable(key string) string {
 
   // load .env file
-  // err := godotenv.Load(".env")
-	// REPLACE WITH THE SCRIPT THING
-  err := godotenv.Load("/home/swider/.config/wpShuffler/.env")
+
+    user, userErr := user.Current()
+    if userErr != nil {
+        fmt.Println("Error getting user:", userErr)
+    }
+
+    // Construct a path relative to the home directory
+    relativePath := ".config/wpShuffler/.env"
+    absolutePath := filepath.Join(user.HomeDir, relativePath)
+
+    fmt.Println("Absolute path:", absolutePath)
+
+  err := godotenv.Load(absolutePath)
 
   if err != nil {
     fmt.Println("Error loading .env file")
@@ -39,7 +50,7 @@ func main() {
 	  // godotenv package
 	source := goDotEnvVariable("SOURCEDIR")
 	destination := goDotEnvVariable("DESTDIR")
-	filename := goDotEnvVariable("NAME")
+	filename := ".wallpaper.jpg"
 	
 	sourceDir := source // Replace with your source directory
 	destDir := destination // Replace with your destination directory
