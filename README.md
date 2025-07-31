@@ -2,6 +2,10 @@
 
 Small utility to hotswap wallpapers with a seleced file folder and hsetroot
 
+Confs in ~/.config/wpShuffler/
+
+After install binary in /bin/shuffler
+
 Compile with GO. Deps:
 GO binaries
 github.com/joho/godotenv

@@ -18,35 +18,39 @@ debug_state=$(cat "$envPath")
 printf "The Current .env path and  is: %s \\n" "$debug_state"
 
 # Ask if the setting needs to be changed:
-read  -r -p "Do you need to change the source dir (y/n) " changeSettings "$(echo \n)"
+read  -r -p "Do you need to change the source dir? (y/n) " changeSettings "$(echo \n)"
+
+read  -r -p "Do you need to build and install? (y/n) " install "$(echo \n)"
 
 # If the state needs to be changed - change it - else exit:
-if [ "$changeSettings" != "y" ]; then
-    printf "Leaving .env as: %s \\n" "$debug_state"
+if [ "$changeSettings" == "y" ]; then
+
+    read  -r -p "Enter new source directory path " dirAnswer "$(echo \n)"
+    
+    sourceDirAnswer=$(eval "realpath $dirAnswer")
+    
+    echo $sourceDirAnswer
+    
+    # Change the DEBUG setting:
+    if [ "$debug_answer" != "n" ]; then
+        echo "SOURCEDIR="$sourceDirAnswer"" > $envPath
+    fi
+    
+    if [ "$destDirAnswer" != "n" ]; then
+        echo "DESTDIR="$destPath"" >> $envPath
+    fi
+    if [ "$fileNameAnswer" != "n" ]; then
+        echo "NAME=.wallpaper.jpg" >> $envPath
+    fi
+fi
+
+
+if [ "$install" == "y" ]; then
+    printf "Building and installing \\n"
     go build -o shuffler
     sudo cp shuffler /usr/bin/
     exit
 fi
 
-read  -r -p "Enter new source directory path " dirAnswer "$(echo \n)"
-
-sourceDirAnswer=$(eval "realpath $dirAnswer")
-
-echo $sourceDirAnswer
-
-# Change the DEBUG setting:
-if [ "$debug_answer" != "n" ]; then
-    echo "SOURCEDIR="$sourceDirAnswer"" > $envPath
-fi
-
-if [ "$destDirAnswer" != "n" ]; then
-    echo "DESTDIR="$destPath"" >> $envPath
-fi
-if [ "$fileNameAnswer" != "n" ]; then
-    echo "NAME=.wallpaper.jpg" >> $envPath
-fi
-
-go build -o shuffler
-sudo cp shuffler /usr/bin/
 exit
 
